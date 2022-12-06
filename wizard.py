@@ -18,16 +18,12 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 
-# from flask_caching import Cache
-
 UPLOAD_DIRECTORY = "dataframes"
 
 if not os.path.exists(UPLOAD_DIRECTORY):
     os.makedirs(UPLOAD_DIRECTORY)
 
-# Launch The Application
-# Normally, Dash creates its own Flask server internally. By creating our own,
-# we can create a route for downloading files directly:
+
 server = Flask(__name__)
 app = dash.Dash(
     server=server, meta_tags=[{"name": "viewport", "content": "width=device-width"}]
@@ -53,13 +49,7 @@ chart_types = [
     "strip",
 ]
 
-# cache = Cache(app.server, config={
-#     'CACHE_TYPE': 'redis',
-#     'CACHE_TYPE': 'filesystem',
-#     'CACHE_DIR': 'cache-directory'
-# })
 
-# Create App Layout
 app.layout = html.Div(
     [
         dcc.Store(id="memory-dataframe", storage_type="session"),
@@ -578,7 +568,6 @@ def Create_Dataframe(dataframe, submit_coloumn, value, name):
 def update_figure(
     dataframe, chart_type, page_current, page_size, column, value, start_date, end_date
 ):
-    # range_slider = []
     if dataframe is None:
         return "", "", "", "", "", "", "", "", ""
     path = os.path.join(UPLOAD_DIRECTORY, dataframe)
